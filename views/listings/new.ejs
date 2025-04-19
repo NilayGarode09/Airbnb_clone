@@ -1,0 +1,71 @@
+
+<% layout("layouts/boilerplate.ejs") %>
+
+<body>
+    <div class="row">
+        <div class="col-8 offset-2">
+            <br><br>
+    <h3>Create your Listing</h3>
+    <form action="/listings" method="post" novalidate class=" needs-validation" enctype="multipart/form-data">
+        <div>
+            <label for="title" class="form-lable">Title</label>
+        <br>
+        <input name="listing[title]" placeholder="enter title" class="form-control" required/>
+        <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        
+        <br>
+        <div>
+            <label for="description" class="form-lable">Description</label>
+            <textarea name="listing[description]" placeholder="enter description" class="form-control" required ></textarea>
+            <div class="valid-feedback">
+                Looks good!
+              </div>
+            <br>
+        </div>
+<br>
+        <div>      
+            <label for="image?" class="form-lable">Image</label>
+            <input name="listing[image]"  class="form-control" type="file" required/>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        <br>
+        <div>      
+            <label for="location" class="form-lable">Location</label>
+            <input name="listing[location]" placeholder="enter location" class="form-control" required/>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+        </div>
+        
+        <br>
+        <div class="row">
+            <div class="md-3 col-md-4">
+                <label for="price" class="form-lable">Price</label>
+                <input name="listing[price]" placeholder="enter price" class="form-control" required/>
+                <div class="valid-feedback">
+                    Looks good!
+                  </div>
+            </div>
+            
+            <div class="md-3 col-md-8">            
+                <label for="country" class="form-lable">Country</label>
+                <input name="listing[country]" placeholder="enter country" class="form-control" required/>
+                <div class="valid-feedback">
+                    Looks good!
+                  </div> 
+            </div>
+               
+        </div>
+        
+        <br>
+        <button class="btn btn-dark add-btn">Add</button>
+        <br><br>
+    </form>
+</div>
+</div>
+</body>
