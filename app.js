@@ -103,10 +103,10 @@ const sessionOptions ={
 
 
 
-// app.get("/",(req,res)=>{
-//     res.send("hi i am roboot");
-//     console.log("req recived");
-// })
+app.get("/",(req,res)=>{
+    res.send("hi i am roboot");
+    console.log("req recived");
+})
 
 
 
