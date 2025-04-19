@@ -183,6 +183,8 @@ app.use ("/",userRouter);
 app.use((err,req,res,next)=>{
     let {statusCode,message}= err;
     // res.status(statusCode).send(message);
+     res.render("./listings/error.ejs");
+
 });
 
 
