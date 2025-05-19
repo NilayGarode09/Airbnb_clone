@@ -1,61 +1,86 @@
 <% layout("layouts/boilerplate.ejs") %>
 
 <body>
-  <!-- <h3>All Listings</h3> -->
    <div class="filters">
     <div class="filter">
-      <div><i class="fa-solid fa-fire"></i></div>
-      <p>Trending</p>
+      <br>
+      <p><a href="/listings/speciality/Trending"  class="nav-link">
+              <div><i class="fa-solid fa-fire"></i></div>
+        Trending</a>
+      </p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-bed"></i>i></div>
-      <p>Rooms</p>
+      <br>
+      
+      <p><a href="/listings/speciality/Swimming Pool" class="nav-link">
+        <div><i class="fa-solid fa-person-swimming"></i></div>
+        Swimming Pool</a>
+      </p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-bed"></i>i></div>
-      <p>Rooms</p>
+      <br>
+      
+      <p><a href="/listings/speciality/Rooms" class="nav-link">
+        <div><i class="fa-solid fa-bed"></i></div>
+        Rooms</a>
+      </p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-umbrella-beach"></i></div>
-      <p>Beach</p>
+      <br>
+      <p><a href="/listings/speciality/Beach" class="nav-link">
+              <div><i class="fa-solid fa-umbrella-beach"></i></div>
+        Beach</a>
+      </p>
     </div>    
     <div class="filter">
-      <div><i class="fa-solid fa-mountain-sun"></i></div>
-      <p>Mountain</p>
+      <br>
+      <p><a href="/listings/speciality/Mountain" class="nav-link">
+              <div><i class="fa-solid fa-mountain-sun"></i></div>
+        Mountain</a>
+      </p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-person-swimming"></i></div>
-      <p>Swimming pool</p>
+      <br>
+      <p><a href="/listings/speciality/Tea & Breakfast" class="nav-link">      
+        <div><i class="fa-solid fa-mug-hot"></i></div>
+        Tea & Breakfast</a></p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-mug-hot"></i></div>
-      <p>Tea & Breakfast</p>
+      <br>
+      <p><a href="/listings/speciality/Artic" class="nav-link">
+              <div><i class="fa-solid fa-snowflake"></i></div>
+        Artic</a></p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-snowflake"></i></div>
-      <p>Artic</p>
+      <br>
+      <p><a href="/listings/speciality/Forest" class="nav-link">
+              <div><i class="fa-solid fa-paw"></i></div>
+        Forest</a></p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-paw"></i></div>
-      <p>Forest</p>
+      <br>
+      <p><a href="/listings/speciality/Boats" class="nav-link">
+              <div><i class="fa-solid fa-sailboat"></i></div>
+        Boats</a></p>
     </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-sailboat"></i></div>
-      <p>Boats</p>
-    </div>
-    <div class="filter">
+    <!-- <div class="filter">
+      <br>
       <div><i class="fa-solid fa-gopuram"></i></div>
-      <p>Tempals</p>
+      <p><a href="/listings/speciality/Temple" class="nav-link">Temple</a></p>
+    </div> -->
+    <br>
+<div class="form-check form-switch form-check-reverse sort-filter">
+      <!-- <i class="fa-solid fa-arrow-down-wide-short" style="font-size: 0.9rem;"></i> -->
+      <select id="sortPrice" onchange="sortListings()" >
+        <option id="sortPrice" value="">Sort</option>
+        <option class="filter" value="asc">Low to High</option>
+        <option class="filter" value="desc">High to Low</option>
+      </select>
     </div>
-
-    <div class="tax-switch">
-      <div class="form-check form-switch form-check-reverse">
-        <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-        <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
-      </div>
-    </div>
-    
   </div>
+<!-- </div> -->
+  
+  
 
    
    
@@ -73,8 +98,8 @@
 
   <div class="row">
     <% for (let list of allListings) { %>
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-4 mt-4">
-        <a href="/listings/<%= list._id%>" class="text-decoration-none text-dark">
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4 mt-4 listing-card" data-price="<%= list.price %>">
+        <a href="/listings/<%=list._id%>" class="text-decoration-none text-dark">
           <div class="card h-100 card-listing" style="width: 100%;">
             <img src="<%= list.image.url %>" class="card-img-top"
              style="height: 15rem; object-fit: cover;" 
@@ -105,4 +130,21 @@
       }
     }
   })
+</script>
+<script>
+  function sortListings() {
+    const sortOrder = document.getElementById("sortPrice").value;
+    const container = document.querySelector(".row");
+    const listings = Array.from(document.querySelectorAll(".listing-card"));
+
+    listings.sort((a, b) => {
+      const priceA = parseFloat(a.getAttribute("data-price"));
+      const priceB = parseFloat(b.getAttribute("data-price"));
+      return sortOrder === "asc" ? priceA - priceB : priceB - priceA;
+    });
+
+    // Clear current listings and append sorted ones
+    container.innerHTML = "";
+    listings.forEach(listing => container.appendChild(listing));
+  }
 </script>

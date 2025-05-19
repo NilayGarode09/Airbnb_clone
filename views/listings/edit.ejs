@@ -1,6 +1,7 @@
 <% layout("layouts/boilerplate.ejs") %>
 
 <body>
+    <br>
     <h3>Edit your Listing</h3>
     <form action="/listings/<%=list._id%>?_method=put" 
         method="post" 
@@ -32,6 +33,26 @@
             <label for="location" class="form-lable">Location</label>
             <input name="listing[location]" class="form-control" value="<%=list.location%>" required />
             
+        </div>
+        <br>
+         <div>      
+            <label for="speciality" class="form-lable">Speciality</label>
+            <select class="form-control" name="listing[speciality]" placeholder="enter speciality">
+                <option>Rooms</option>
+                <option>Swimming Pool</option>
+                <option>Beach</option>
+                <option>Mountain</option>
+                <option>Tea & Breakfast</option>
+                <option>Artic</option>
+                <option>Trending</option>
+                <option>Forest</option>
+                <option>Boats</option>
+                <option>Temple</option>
+      </select>
+            <!-- <input name="listing[location]" placeholder="enter location" class="form-control" required/> -->
+            <div class="valid-feedback">
+                Looks good!
+            </div>
         </div>
         <br>
         <div class="mb-3">

@@ -17,7 +17,6 @@ const upload = multer({ storage })
 
 
 
-
 router
 .route("/")
 .get( wrapAsync(listingController.index))
@@ -28,7 +27,12 @@ router
 
 router.get("/new",isLoggedIn, listingController.renderNewForm);
 
+router.route("/search")
+.get(wrapAsync(listingController.searchListing))
 
+// router.get("/:speciality" ,listingController.getSpacility);
+router.route("/speciality/:speciality")
+.get(wrapAsync(listingController.getSpacility));
 
 router.route("/:id")
 .get(wrapAsync(listingController.showListings))
@@ -38,7 +42,8 @@ router.route("/:id")
      upload.single('listing[image]'),
       wrapAsync(listingController.updatingListing))
 .delete(isLoggedIn,isOwner, wrapAsync(listingController.destroyListing));
-      
+
+
 
 // New form
 
@@ -54,12 +59,6 @@ router.route("/:id")
 //     // console.log(list);
 //     res.render("listings/show.ejs", {list});
 // }));
-
-
-
-
-
-
 
 // Create listing
 

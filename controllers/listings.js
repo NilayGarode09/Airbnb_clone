@@ -1,6 +1,6 @@
 const Listing = require("../models/listings.js");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
-
+// const Listing = require('../models/listing');
 const mapToken = process.env.MAP_TOKEN;
 const geoCodingClient = mbxGeocoding({ accessToken: mapToken});
 
@@ -16,6 +16,7 @@ module.exports.renderNewForm =(req, res) => {
 
 
 module.exports.showListings=async (req, res) => {
+    console.log(req.body);
     const { id } = req.params;
     const list = await Listing.findById(id)
         .populate({
@@ -30,7 +31,6 @@ module.exports.showListings=async (req, res) => {
         req.flash("error", "Listing you requested does not exist!");
         return res.redirect("/listings");
     }
-
     res.render("listings/show.ejs", { list });
 }
 
@@ -80,6 +80,7 @@ module.exports.updatingListing =async (req, res) => {
     req.flash("sucess", "Listing updated!");
     res.redirect(`/listings/${id}`);
 }
+
 module.exports.destroyListing= async (req, res) => {
     const { id } = req.params;
     const deletedListing = await Listing.findByIdAndDelete(id);
@@ -87,3 +88,32 @@ module.exports.destroyListing= async (req, res) => {
     console.log(deletedListing);
     res.redirect("/listings");
 }
+
+// const Listing = require('../models/listing'); // adjust path if needed
+
+module.exports.searchListing = async (req, res) => {
+  const { name } = req.query;
+//   console.log(name)
+  if (!name) {
+    req.flash("error", "Listing does not exist!");
+    return res.redirect("/listings"); 
+  }
+  
+  // Case-insensitive search
+const listing = await Listing.findOne({ title: new RegExp(name, 'i') });
+
+//   console.log(listing)
+  if (!listing) {
+    req.flash("error","Listing dose not exist!");
+   return res.redirect("/listings");  }
+
+  // Redirect to the listing's detail page
+  res.redirect(`/listings/${listing._id}`);
+};
+module.exports.getSpacility = async(req, res ,next) => {  
+    const { speciality } = req.params;  
+    // console.log(speciality);
+    const allListings = await Listing.find({ speciality });
+    res.render("listings/speciality", { allListings, speciality });
+
+};

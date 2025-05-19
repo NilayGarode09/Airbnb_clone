@@ -31,6 +31,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.engine('ejs',ejsMAte );
 app.use(express.static(path.join(__dirname,"/public")));
+app.use(express.static("public"));
 
 
 
@@ -102,11 +103,9 @@ const sessionOptions ={
 
 
 
-
 app.get("/",(req,res)=>{
     res.redirect("/listings");
 })
-
 
 
 
@@ -125,8 +124,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req,res,next)=>{
     res.locals.sucess= req.flash("sucess");
     res.locals.error= req.flash("error");
-    res.locals.currUser =req.user;
-
+    // res.locals.currUser =req.user;
+    res.locals.currUser = req.user;
     // console.log(res.locals.sucess);
     next();
 })
@@ -179,13 +178,22 @@ app.use ("/",userRouter);
 
 // delete review route 
 
-app.use((err,req,res,next)=>{
-    let {statusCode,message}= err;
-    // res.status(statusCode).send(message);
-     res.render("./listings/error.ejs");
+// app.use((err,req,res,next)=>{
 
+//     // console.log("error is here")
+//     let {statusCode,message}= err;
+// // console.log(err.message);
+//     res.status(statusCode).send(message);
+//      res.render("./listings/error.ejs");
+
+// });
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode && Number.isInteger(err.statusCode) ? err.statusCode : 500;
+    const message = err.message || "Something went wrong!";
+    console.error("Error caught:", err);
+
+    res.status(statusCode).render("listings/error", { err });
 });
-
 
 
 app.listen(8080,()=>{

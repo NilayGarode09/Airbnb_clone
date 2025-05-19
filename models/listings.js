@@ -8,8 +8,11 @@ const listingSchema = new Schema({
       type: String,
       required: true,
     },
+    speciality:{
+      type:String,
+    },
     description: String,
-    price: String,
+    price: Number,
     image: {
       filename: {
         type: String,
@@ -42,7 +45,8 @@ const listingSchema = new Schema({
       coordinates: {
         type: [Number],
         required: true
-      }
+      },
+
     }
   });
   
